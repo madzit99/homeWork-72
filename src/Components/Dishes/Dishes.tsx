@@ -16,7 +16,7 @@ const Dishes: React.FC = () => {
 
   return (
     <>
-      <h3>Pizza:</h3>
+      <h3>Пицца:</h3>
       <div className="pizza-wrapper">
         {dishesLoading ? (
           <Spinner />
