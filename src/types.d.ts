@@ -21,3 +21,7 @@ export interface CartDish {
   dish: Dish;
   amount: number;
 }
+
+export interface ApiOrders {
+  [id: string]: CartDish[];
+}

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ApiDish, Dish, DishesList } from "../../types";
+import { ApiDish, ApiOrders, Dish, DishesList } from "../../types";
 import { AppDispatch, RootState } from "../../app/store";
 import axiosApi from "../../axiosApi";
 
@@ -68,3 +68,23 @@ export const updateDish = createAsyncThunk<
 >("dishes/update", async ({ id, dish }) => {
   await axiosApi.put("/dishes/" + id + ".json", dish);
 });
+
+export const fetchOrderData = createAsyncThunk<
+  ApiOrders,
+  void,
+  { state: RootState }
+>("orders/fetchOrderData", async () => {
+  try {
+    const response = await axiosApi.get("orders.json");
+    return response.data;
+  } catch (error) {
+    console.log("Error!", error);
+  }
+});
+
+export const deleteOrder = createAsyncThunk<void, string, { state: RootState }>(
+  "dishes/delete",
+  async (dishId) => {
+    await axiosApi.delete(`/orders/${dishId}.json`);
+  }
+);

@@ -11,11 +11,8 @@ body {
 
 .pizza {
   width: 250px;
-  padding: 250px 10px 20px;
-  background-color: #ffffff;
-  background-position: top left;
-  background-size: 110%;
-  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
   border-radius: 15px;
   -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
@@ -24,5 +21,5 @@ body {
 }
 
 .pizza .card-title {
-    color: #70544F;
+  color: #70544f;
 }

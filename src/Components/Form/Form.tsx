@@ -57,6 +57,7 @@ const Form: React.FC<Props> = ({
           className="form-control"
           value={dish.name}
           onChange={changeDish}
+          required
         />
       </div>
       <div className="form-group">
@@ -79,6 +80,7 @@ const Form: React.FC<Props> = ({
           className="form-control"
           value={dish.price}
           onChange={changeDish}
+          required
         />
       </div>
 
