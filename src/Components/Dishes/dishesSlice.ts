@@ -1,16 +1,18 @@
-import { Dish } from "../../types";
-import { createSlice } from "@reduxjs/toolkit";
-import { createDish, fetchDishes } from "./dishesThunks";
+import { ApiDish, Dish } from "../../types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createDish, fetchDish, fetchDishes, updateDish } from "./dishesThunks";
 import { RootState } from "../../app/store";
 
 export interface DishState {
   dishes: Dish[];
+  dish: ApiDish | null;
   loading: boolean;
   error: boolean;
 }
 
 const initialState: DishState = {
   dishes: [],
+  dish: null,
   loading: false,
   error: false,
 };
@@ -39,9 +41,32 @@ export const dishesSlice = createSlice({
     builder.addCase(createDish.rejected, (state) => {
       state.loading = false;
     });
+    builder.addCase(fetchDish.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      fetchDish.fulfilled,
+      (state, { payload: dish }: PayloadAction<ApiDish>) => {
+        state.loading = false;
+        state.dish = dish;
+      }
+    );
+    builder.addCase(fetchDish.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(updateDish.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateDish.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(updateDish.rejected, (state) => {
+      state.loading = false;
+    });
   },
 });
 
 export const dishesReducer = dishesSlice.reducer;
 export const selectDishes = (state: RootState) => state.dishes.dishes;
+export const selectOneDish = (state: RootState) => state.dishes.dish;
 export const selectLoading = (state: RootState) => state.dishes.loading;

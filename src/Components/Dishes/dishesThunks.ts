@@ -25,6 +25,23 @@ export const fetchDishes = createAsyncThunk<
   return newDishes;
 });
 
+export const fetchDish = createAsyncThunk<
+  ApiDish,
+  string,
+  { state: RootState }
+>("dishes/fetchOne", async (id) => {
+  const response = await axiosApi.get<ApiDish | null>(
+    "/dishes/" + id + ".json"
+  );
+  const dish = response.data;
+
+  if (dish === null) {
+    throw new Error("Not found");
+  }
+
+  return dish;
+});
+
 export const createDish = createAsyncThunk<void, ApiDish, { state: RootState }>(
   "dishes/create",
   async (dish) => {
@@ -38,3 +55,16 @@ export const deleteDish = createAsyncThunk<void, string, { state: RootState }>(
     await axiosApi.delete(`/dishes/${dishId}.json`);
   }
 );
+
+interface UpdateDishParams {
+  id: string;
+  dish: ApiDish;
+}
+
+export const updateDish = createAsyncThunk<
+  void,
+  UpdateDishParams,
+  { state: RootState }
+>("dishes/update", async ({ id, dish }) => {
+  await axiosApi.put("/dishes/" + id + ".json", dish);
+});
