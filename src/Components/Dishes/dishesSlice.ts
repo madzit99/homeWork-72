@@ -1,6 +1,6 @@
 import { Dish } from "../../types";
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchDishes } from "./dishesThunks";
+import { createDish, fetchDishes } from "./dishesThunks";
 import { RootState } from "../../app/store";
 
 export interface DishState {
@@ -28,6 +28,15 @@ export const dishesSlice = createSlice({
       state.dishes = items;
     });
     builder.addCase(fetchDishes.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(createDish.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createDish.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(createDish.rejected, (state) => {
       state.loading = false;
     });
   },

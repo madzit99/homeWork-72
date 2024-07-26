@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Dish, DishesList } from "../../types";
-import { AppDispatch } from "../../app/store";
+import { ApiDish, Dish, DishesList } from "../../types";
+import { AppDispatch, RootState } from "../../app/store";
 import axiosApi from "../../axiosApi";
 
 export const fetchDishes = createAsyncThunk<
@@ -24,3 +24,10 @@ export const fetchDishes = createAsyncThunk<
   }
   return newDishes;
 });
+
+export const createDish = createAsyncThunk<void, ApiDish, { state: RootState }>(
+  "dishes/create",
+  async (dish) => {
+    await axiosApi.post("/dishes.json", dish);
+  }
+);

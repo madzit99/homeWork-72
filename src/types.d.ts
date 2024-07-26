@@ -11,6 +11,12 @@ export interface DishesList {
   [id: string]: ApiDish;
 }
 
+export interface DishMutation {
+  name: string;
+  image: string;
+  price: string;
+}
+
 export interface CartDish {
   dish: Dish;
   amount: number;
