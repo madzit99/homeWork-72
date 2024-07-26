@@ -5,7 +5,11 @@ import { selectDishes, selectLoading } from "./dishesSlice";
 import { fetchDishes } from "./dishesThunks";
 import ClientDish from "./ClientDish";
 
-const Dishes: React.FC = () => {
+interface Props {
+  isAdmin?: boolean;
+}
+
+const Dishes: React.FC<Props> = ({ isAdmin }) => {
   const dispatch = useAppDispatch();
   const dishes = useAppSelector(selectDishes);
   const dishesLoading = useAppSelector(selectLoading);
@@ -21,7 +25,9 @@ const Dishes: React.FC = () => {
         {dishesLoading ? (
           <Spinner />
         ) : (
-          dishes.map((dish) => <ClientDish key={dish.id} dish={dish} />)
+          dishes.map((dish) => (
+            <ClientDish key={dish.id} dish={dish} isAdmin={isAdmin} />
+          ))
         )}
       </div>
     </>

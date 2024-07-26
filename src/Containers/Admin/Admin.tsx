@@ -14,7 +14,7 @@ const Admin = () => {
           </NavLink>
         </div>
         <div className="dishes">
-          <Dishes />
+          <Dishes isAdmin={true} />
         </div>
       </div>
     </>
