@@ -4,6 +4,7 @@ import CartDishes from "../Cart/CartDishes";
 import { useAppDispatch, useAppSelector } from "../../app/Hooks";
 import { clearCart, selectCartDishes } from "../Cart/cartSlice";
 import axiosApi from "../../axiosApi";
+import { DELIVERY } from "../../constants";
 
 interface Props extends React.PropsWithChildren {
   show: boolean;
@@ -26,6 +27,10 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
     onClose();
   };
 
+  const total = cartDishes.reduce((sum, cartDish) => {
+    return sum + cartDish.amount * cartDish.dish.price;
+  }, DELIVERY);
+
   return (
     <>
       <Backdrop show={show} onClick={onClose} />
@@ -41,6 +46,18 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
             </div>
             <div>
               <CartDishes cartDishes={cartDishes} />
+              <div className="card mb-2 p-2">
+                <div className="row align-items-center">
+                  <div className="col-6 text-start">Доставка:</div>
+                  <div className="col-6 text-end">{DELIVERY} KGS</div>
+                </div>
+              </div>
+              <div className="card mb-2 p-2">
+                <div className="row align-items-center">
+                  <div className="col-6 text-start">Общая сумма заказа:</div>
+                  <div className="col-6 text-end">{total} KGS</div>
+                </div>
+              </div>
             </div>
             <div className="modal-footer">
               <button className="btn btn-danger" onClick={onClose}>
